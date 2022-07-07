@@ -65,5 +65,5 @@ commands:
     actions:
       - workdir: '${CHE_PROJECTS_ROOT}/quarkus-build-options'
         type: exec
-        command: 'curl -L https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-amd64.tar.gz -s | tar zxv && chmod 755 odo'
+        command: 'curl -L https://mirror.openshift.com/pub/openshift-v4/clients/odo/v2.5.1/odo-linux-amd64.tar.gz -s | tar zxv && chmod 755 odo'
         component: maven  
