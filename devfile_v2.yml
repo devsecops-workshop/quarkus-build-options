@@ -1,7 +1,7 @@
 schemaVersion: 2.1.0
 metadata:
   generateName: build-options-
-ccomponents:
+components:
   - name: tools
     container:
       image: registry.access.redhat.com/ubi8/openjdk-11
