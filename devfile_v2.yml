@@ -46,6 +46,6 @@ commands:
   - exec:
       commandLine: 'curl -L https://mirror.openshift.com/pub/openshift-v4/clients/odo/v2.5.1/odo-linux-amd64.tar.gz -s | tar zxv && chmod 755 odo'
       component: tools
-      label: Install odo cli
+      label: Install odo-cli
       workingDir: '${PROJECTS_ROOT}/quarkus-build-options'
     id: install-odo
