@@ -49,6 +49,3 @@ commands:
       label: Install odo cli
       workingDir: '${PROJECTS_ROOT}/quarkus-build-options'
     id: install-odo
-events:
-  postStart:
-    - install-odo    
