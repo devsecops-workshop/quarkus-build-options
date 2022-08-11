@@ -1,6 +1,6 @@
 schemaVersion: 2.1.0
 metadata:
-  generateName: build-options-
+  generateName: workshop-devspace-
 components:
   - name: tools
     container:
@@ -45,7 +45,7 @@ commands:
       workingDir: ${PROJECT_SOURCE}
   - exec:
       commandLine: 'curl -L https://mirror.openshift.com/pub/openshift-v4/clients/odo/v2.5.1/odo-linux-amd64.tar.gz -s | tar zxv && chmod 755 odo'
-      component: maven
+      component: tools
       label: Install odo
       workingDir: '${PROJECTS_ROOT}/quarkus-build-options'
     id: install-odo
