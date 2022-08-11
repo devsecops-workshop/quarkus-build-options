@@ -2,23 +2,57 @@ schemaVersion: 2.1.0
 metadata:
   generateName: workshop-devspace-
 components:
-  - name: tools
+  - attributes:
+      app.kubernetes.io/name: tools
+      che-theia.eclipse.org/vscode-extensions:
+        - 'relative:extension/resources/github_com/redhat-developer/devspaces-vscode-extensions/releases/download/7_44-che-assets/java-0.82.0-369.vsix'
+        - 'relative:extension/resources/github_com/redhat-developer/devspaces-vscode-extensions/releases/download/7_44-che-assets/vscode-java-debug-0.26.0.vsix'
+        - 'relative:extension/resources/open-vsx_org/api/vscjava/vscode-java-test/0_28_1/file/vscjava.vscode-java-test-0.28.1.vsix'
+      che-theia.eclipse.org/vscode-preferences:
+        java.server.launchMode: Standard
     container:
-      image: registry.access.redhat.com/ubi8/openjdk-11
-      memoryLimit: 512Mi ## default app nowhere needs this but leaving room for expansion.
+      args:
+        - sh
+        - '-c'
+        - '${PLUGIN_REMOTE_ENDPOINT_EXECUTABLE}'
+      endpoints:
+        - exposure: none
+          name: debug
+          protocol: tcp
+          targetPort: 5005
+        - exposure: public
+          name: hello-greeting-endpoint
+          path: /hello/greeting/devspaces-user
+          protocol: http
+          targetPort: 8080
+      env:
+        - name: QUARKUS_HTTP_HOST
+          value: 0.0.0.0
+        - name: PLUGIN_REMOTE_ENDPOINT_EXECUTABLE
+          value: /remote-endpoint/plugin-remote-endpoint
+        - name: THEIA_PLUGINS
+          value: 'local-dir:///plugins/sidecars/tools'
+        - name: CHE_DASHBOARD_URL
+          value: 'https://devspaces-openshift-operators.apps.ocp4.nexus-eight.com'
+        - name: CHE_PLUGIN_REGISTRY_URL
+          value: 'https://devspaces-openshift-operators.apps.ocp4.nexus-eight.com/plugin-registry/v3'
+        - name: CHE_PLUGIN_REGISTRY_INTERNAL_URL
+          value: 'http://plugin-registry.openshift-operators.svc:8080/v3'
+      image: 'registry.redhat.io/devspaces/udi-rhel8@sha256:aed2d0df14feebbc5536c4f66184bb9cdcc7c1177351708467fa64f69c8d6e40'
+      memoryLimit: 4G
       mountSources: true
+      sourceMapping: /projects
       volumeMounts:
         - name: m2
           path: /home/user/.m2
-      endpoints:
-        - name: http-quarkus
-          targetPort: 8080
-      env:
-        - name: DEBUG_PORT
-          value: '5858'
+        - name: remote-endpoint
+          path: /remote-endpoint
+        - name: plugins
+          path: /plugins
+    name: tools
   - name: m2
     volume:
-      size: 3Gi
+      size: 1G
 commands:
   - id: init-compile
     exec:
