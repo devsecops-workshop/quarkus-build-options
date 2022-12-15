@@ -53,6 +53,12 @@ components:
   - name: m2
     volume:
       size: 1G
+  - name: remote-endpoint
+    volume:
+      size: 256Mi
+  - name: plugins
+    volume:
+      size: 256Mi    
 commands:
   - id: init-compile
     exec:
