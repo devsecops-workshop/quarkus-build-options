@@ -43,3 +43,8 @@ odo
 launch.json
 kubectl
 README.md
+
+.odo
+.odo/env
+.odo/odo-file-index.json
+.mvn
